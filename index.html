@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Corielo · Showroom</title>
+<meta name="description" content="Explora el showroom virtual de Corielo. Corazón de cielo.">
+<meta name="theme-color" content="#f0ede9">
+<style>
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#141614;color:#e9e8df;font-family:"Helvetica Neue",Arial,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
+canvas{display:block;width:100vw;height:100vh;touch-action:none}
+header{position:absolute;top:28px;left:32px;right:32px;display:flex;justify-content:space-between;align-items:baseline;pointer-events:none;z-index:2}
+.brand{font-size:22px;letter-spacing:-.5px}
+.muted{color:#8f978a}
+small{font-size:10px;letter-spacing:2px;text-transform:uppercase}
+#intro{position:absolute;top:96px;left:32px;pointer-events:none;transition:opacity .5s;z-index:2}
+h1{font-size:clamp(28px,3.6vw,48px);font-weight:400;letter-spacing:-1.5px;line-height:1.05;margin:14px 0}
+p{font-size:13px;color:#a9afa1;line-height:1.6;margin:0}
+footer{position:absolute;bottom:26px;left:32px;right:32px;display:flex;justify-content:space-between;align-items:center;gap:15px;z-index:2}
+button{background:#22261fe6;border:1px solid #545c4a;color:#eceee5;padding:12px 18px;border-radius:30px;cursor:pointer;font:inherit;font-size:13px;transition:background .2s,color .2s}
+button:hover,button:focus-visible{background:#d4e8ac;color:#171918;outline:none}
+#count{display:inline-block;width:76px;text-align:center;font-size:12px;font-variant-numeric:tabular-nums}
+#detail{position:absolute;right:6vw;top:50%;transform:translateY(-50%);width:min(320px,34vw);opacity:0;pointer-events:none;transition:opacity .45s;z-index:2}
+#detail.on{opacity:1;pointer-events:auto}
+#detail h2{font-size:40px;font-weight:400;letter-spacing:-1px;margin:10px 0 14px}
+#detail p{margin-bottom:22px}
+#hint{font-size:10px;letter-spacing:1.5px;color:#8f978a}
+#caption{position:absolute;left:0;top:0;transform:translate(-50%,0);font-size:11px;letter-spacing:1.5px;color:#e9e8df;pointer-events:none;opacity:0;transition:opacity .25s;white-space:nowrap;z-index:2}
+#status{position:absolute;top:50%;width:100%;text-align:center;color:#d4e8ac;z-index:3}
+@media(max-width:820px){
+ header{left:20px;right:20px}.brand{font-size:19px}header small{max-width:120px;text-align:right;line-height:1.6}
+ #intro{left:20px;top:84px}h1{font-size:28px}
+ footer{left:20px;right:20px;flex-wrap:wrap}#hint{order:2;width:100%}
+ #detail{right:20px;left:20px;width:auto;top:auto;bottom:110px;transform:none}#detail h2{font-size:26px;margin:6px 0 8px}#detail p{margin-bottom:12px}
+}
+
+/* Corielo: sage, ivory, serif typography and generous spacing. */
+:root{--sage:#6b8662;--ink:#35472f;--cream:#f0ede9;--line:rgba(76,97,66,.25)}
+body{background:var(--cream);color:var(--ink)}
+header{top:0;left:0;right:0;padding:22px 36px 24px;align-items:center;background:linear-gradient(var(--cream) 72%,rgba(240,237,233,0));gap:24px}
+.brand{display:block;pointer-events:auto}.brand img{display:block;width:142px;height:auto}
+header small{color:var(--sage);font-size:9px;letter-spacing:2.5px}
+.brand-links{display:flex;gap:24px;align-items:center;pointer-events:auto}.brand-links a{font-size:10px;text-transform:uppercase;letter-spacing:1.8px;color:var(--ink);text-decoration:none;padding:10px 0;border-bottom:1px solid transparent}.brand-links a:hover{border-color:var(--sage)}
+.muted{color:#6b7d61}#intro{top:120px;left:36px}#intro small{font-size:9px;letter-spacing:2.8px}h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(30px,3.4vw,46px);font-weight:400;letter-spacing:-1.2px;line-height:1.05;margin:12px 0}#intro p{color:#6b7664;font-size:11px;line-height:1.7;max-width:240px}
+p{color:#65715d}#detail{background:rgba(240,237,233,.96);padding:26px 28px;border:1px solid var(--line);border-radius:3px;box-shadow:0 16px 50px #23351e18}#detail h2{font-family:Georgia,'Times New Roman',serif;color:var(--ink);font-size:36px}#detail p{font-size:12px}#detail small{color:var(--sage)}
+footer{bottom:0;left:0;right:0;padding:27px 36px 22px;background:linear-gradient(transparent,var(--cream) 36%);align-items:center}footer>div:last-child{display:flex;align-items:center;gap:6px}button{color:var(--ink);background:rgba(240,237,233,.92);border-color:var(--line);border-radius:2px;padding:12px 16px;font-size:11px}button:hover,button:focus-visible{background:var(--sage);color:#fff;outline:2px solid #6b866244;outline-offset:2px}#count{color:#52664a}#hint{color:#5d7054;font-size:9px;letter-spacing:1.7px;max-width:46%;line-height:1.7}#caption{color:var(--ink);background:#f0ede9e8;padding:7px 11px;border:1px solid var(--line);font-size:9px}#status{color:var(--sage);font-family:Georgia,serif;font-size:18px}
+@media(max-width:820px){header{padding:18px 20px 22px;gap:14px}.brand img{width:118px}header>small{display:none}.brand-links{gap:16px}.brand-links a{font-size:9px;letter-spacing:1px}#intro{top:104px;left:20px}#intro h1{font-size:29px}#intro p{font-size:10px}footer{padding:22px 20px 20px}#hint{max-width:none;width:100%;font-size:8px}footer>div:last-child{width:100%;justify-content:center}#detail{padding:18px 20px;bottom:125px}#detail h2{font-size:26px}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+<header><a class="brand" href="https://corielo.com/" target="_blank" rel="noopener" aria-label="Corielo · Corazón de cielo"><img src="assets/corielo-logo.png" alt="Corielo. Corazón de cielo" width="500" height="195"></a><small>El showroom</small><nav class="brand-links" aria-label="Corielo"><a href="https://corielo.com/" target="_blank" rel="noopener">Tienda ↗</a><a href="https://www.instagram.com/corielo.mx/" target="_blank" rel="noopener">Instagram ↗</a></nav></header>
+<div id="intro" hidden><small class="muted">Corielo · Showroom virtual</small><h1>Corazón<br>de cielo.</h1><p>Un espacio para descubrir.<br><span id="total"></span> prendas · Arrastra para explorar.</p></div>
+<div id="detail"><small class="muted">Vista de prenda</small><h2 id="name"></h2><p>Haz clic para ver el otro lado.<br>Arrastra para girar libremente.</p><button id="close">← Volver al perchero</button></div>
+<div id="caption"></div>
+<div id="status">Bienvenido a Corielo…</div>
+<footer><div id="hint">ARRASTRA PARA RECORRER · TOCA UNA CAMISA</div><div><button id="prev" aria-label="Anterior">←</button><span id="count"></span><button id="next" aria-label="Siguiente">→</button> <button id="side" title="Qué cara muestra la prenda al pasar el mouse">Hover: frente</button></div></footer>
+<script type="module" src="app.js?v=clo-1"></script>
+</body>
+</html>
